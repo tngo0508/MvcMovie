@@ -14,11 +14,46 @@ namespace MvcMovie.Controllers
     {
         private MovieDBContext db = new MovieDBContext();
 
-        // GET: Movies
-        public ActionResult Index()
+        [HttpPost]
+        public string Index(FormCollection fc, string searchString)
         {
-            return View(db.Movies.ToList());
+            return "<h3> From [HttpPost]Index: " + searchString + "</h3>";
         }
+
+        // GET: Movies
+        //public ActionResult Index()
+        //{
+        //    return View(db.Movies.ToList());
+        //}
+
+        public ActionResult Index(string searchString)
+        {
+            var movies = from m in db.Movies
+                         select m;
+
+            if (!String.IsNullOrEmpty((searchString)))
+            {
+                movies = movies.Where(s => s.Title.Contains(searchString));
+            }
+
+
+            return View(movies);
+        }
+
+        //public ActionResult Index(string id)
+        //{
+        //    var searchString = id;
+        //    var movies = from m in db.Movies
+        //        select m;
+
+        //    if (!String.IsNullOrEmpty((searchString)))
+        //    {
+        //        movies = movies.Where(s => s.Title.Contains(searchString));
+        //    }
+
+
+        //    return View(movies);
+        //}
 
         // GET: Movies/Details/5
         public ActionResult Details(int? id)
