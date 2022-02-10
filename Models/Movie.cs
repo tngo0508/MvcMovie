@@ -7,6 +7,7 @@ using System.Web;
 
 namespace MvcMovie.Models
 {
+    // testing comments
     public class Movie
     {
         public int ID { get; set; }
